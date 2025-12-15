@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Hitung Volume Bangun Ruang</title>
+<style>
+    body {
+        font-family: "Poppins", sans-serif;
+        background: #f8b4c8; /* PINK */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        width: 400px;
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 22px;
+        -webkit-text-stroke: 0.6px #000;
+    }
+
+    select, input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 20px;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: bold;
+        background: #ec6f9f;
+        color: #fff;
+        cursor: pointer;
+        -webkit-text-stroke: 0.4px #000;
+    }
+
+    button:hover {
+        background: #e0558c;
+    }
+
+    .resultBox {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        background: #f7f7f7;
+        border: 1px solid #ddd;
+        text-align: center;
+        font-weight: bold;
+        display: none;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Hitung Volume Bangun Ruang</h2>
+
+    <select id="shape" onchange="showFields()">
+        <option value="">-- Pilih Bangun Ruang --</option>
+        <option value="balok">Balok</option>
+        <option value="tabung">Tabung</option>
+        <option value="bola">Bola</option>
+        <option value="prisma">Prisma Segitiga</option>
+        <option value="kerucut">Kerucut</option>
+    </select>
+
+    <div id="fields"></div>
+
+    <button onclick="hitungVolume()">Hitung Volume</button>
+
+    <div id="result" class="resultBox"></div>
+</div>
+
+<script>
+function showFields() {
+    let shape = document.getElementById("shape").value;
+    let fields = document.getElementById("fields");
+    fields.innerHTML = "";
+
+    if (shape === "balok") {
+        fields.innerHTML = `
+            <input id="p" type="number" placeholder="Panjang">
+            <input id="l" type="number" placeholder="Lebar">
+            <input id="t" type="number" placeholder="Tinggi">
+        `;
+    } else if (shape === "tabung") {
+        fields.innerHTML = `
+            <input id="r" type="number" placeholder="Jejari">
+            <input id="t" type="number" placeholder="Tinggi">
+        `;
+    } else if (shape === "bola") {
+        fields.innerHTML = `<input id="r" type="number" placeholder="Jejari">`;
+    } else if (shape === "prisma") {
+        fields.innerHTML = `
+            <input id="tinggiAlas" type="number" placeholder="Tinggi Alas">
+            <input id="panjangAlas" type="number" placeholder="Panjang Alas">
+            <input id="tinggiPrisma" type="number" placeholder="Tinggi Prisma">
+        `;
+    } else if (shape === "kerucut") {
+        fields.innerHTML = `
+            <input id="r" type="number" placeholder="Jejari Alas">
+            <input id="t" type="number" placeholder="Tinggi Kerucut">
+        `;
+    }
+}
+
+function hitungVolume() {
+    let shape = document.getElementById("shape").value;
+    let resultBox = document.getElementById("result");
+    let phi = 3.14;
+    let V = 0;
+
+    if (shape === "") {
+        resultBox.style.display = "block";
+        resultBox.innerHTML = "Pilih bangun ruang terlebih dahulu";
+        return;
+    }
+
+    if (shape === "balok") {
+        V = (+p.value) * (+l.value) * (+t.value);
+    } else if (shape === "tabung") {
+        V = phi * (+r.value) * (+r.value) * (+t.value);
+    } else if (shape === "bola") {
+        V = phi * (+r.value) ** 3;
+    } else if (shape === "prisma") {
+        V = 0.5 * (+tinggiAlas.value) * (+panjangAlas.value) * (+tinggiPrisma.value);
+    } else if (shape === "kerucut") {
+        V = (1/3) * phi * (+r.value) ** 2 * (+t.value);
+    }
+
+    resultBox.style.display = "block";
+    resultBox.innerHTML = "Volume:<br>" + V.toFixed(2);
+}
+</script>
+
+</body>
+</html>
+
